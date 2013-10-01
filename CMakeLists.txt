@@ -26,12 +26,12 @@ add_library(sll "${PROJECT_CXX_DIR}/SLL.cpp")
 target_link_libraries(sll sll_node)
 
 #Double linked List node
-#add_library(dll_node "${PROJECT_CXX_DIR}/DLLNode.cpp")
-#target_link_libraries(dll_node base_node)
+add_library(dll_node "${PROJECT_CXX_DIR}/DLLNode.cpp")
+target_link_libraries(dll_node base_node)
 
 #Doubly linked lists
-#add_library(dll "${PROJECT_CXX_DIR}/DLL.cpp")
-#target_link_libraries(dll dll_node)
+add_library(dll "${PROJECT_CXX_DIR}/DLL.cpp")
+target_link_libraries(dll dll_node)
 
 
 ADD_SUBDIRECTORY("ext/gtest-1.6.0")
