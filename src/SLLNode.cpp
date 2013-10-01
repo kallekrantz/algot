@@ -1,19 +1,13 @@
 #include "include/SLLNode.h"
 
-algot::SLLNode::SLLNode(int value, algot::SLLNode* next){
-  this->value = value;
+algot::SLLNode::SLLNode(int nvalue, algot::SLLNode* next):algot::BASENode(nvalue){
   this->next = next;
 }
 
-void algot::SLLNode::setValue(int value){
-  this->value = value;
-}
-
-int algot::SLLNode::getValue(){
-  return this->value;
-}
-
 algot::SLLNode* algot::SLLNode::getNext(){
+  return this->next;
+}
+const algot::SLLNode* algot::SLLNode::getNext() const{
   return this->next;
 }
 

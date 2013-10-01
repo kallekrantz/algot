@@ -31,10 +31,8 @@ TEST_F(SLLTest, AddElementIdentical){
 }
 
 TEST_F(SLLTest, AddElementSeries){
-  EXPECT_TRUE(sl1->addElement(1));
-  EXPECT_TRUE(sl1->addElement(2));
   for(int i = 0; i < 100; i++){
-    EXPECT_TRUE(sl2->addElement(i));
+    ASSERT_TRUE(sl2->addElement(i));
   }
 }
 
@@ -49,14 +47,14 @@ TEST_F(SLLTest, DeleteElementSeries){
     sl1->addElement(i);
   }
   for(int i = 0; i < 100; i++){
-    EXPECT_TRUE(sl1->deleteElement(i));
+    ASSERT_TRUE(sl1->deleteElement(i));
   }
 }
 
 TEST_F(SLLTest, AddSize){
   for(int i = 0; i < 100; i++){
-    EXPECT_TRUE(sl2->addElement(i));
-    EXPECT_EQ(i+1, sl2->size());
+    ASSERT_TRUE(sl2->addElement(i));
+    ASSERT_EQ(i+1, sl2->size());
   }
 }
 
@@ -67,7 +65,7 @@ TEST_F(SLLTest, SubtractSize){
   }
   for(int i = 0; i <= count; i++){
     sl2->deleteElement(i);
-    EXPECT_EQ(count-i, sl2->size());
+    ASSERT_EQ(count-i, sl2->size());
   }
 }
 
@@ -84,6 +82,26 @@ TEST_F(SLLTest, ToArray){
   for(int i = 0; i < count; i++){
     ASSERT_EQ(array[i], compareArray[i]);
   }
+  delete[] array;
 }
 
+TEST_F(SLLTest, IterateList){
+  int count = 100;
+  for(int i = 0; i < count; i++){
+    sl0->addElement(i);
+  }
+  algot::SLLNode const* head = sl0->getHead();
+  for(int i = 0; i < count; i++){
+    ASSERT_EQ(i, head->getValue());
+    head = head->getNext();
+  }
+}
 
+TEST_F(SLLTest, FindInList){
+  sl0->addElement(1);
+  sl0->addElement(-1);
+  sl0->addElement(5);
+  EXPECT_EQ(-1, sl0->getNode(-1)->getValue());
+  EXPECT_EQ(5, sl0->getNode(5)->getValue());
+  EXPECT_FALSE(sl0->getNode(2));
+}

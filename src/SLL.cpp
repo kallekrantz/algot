@@ -6,6 +6,17 @@ algot::SLL::SLL(){
   head = new SLLNode(0);
 }
 
+algot::SLL::~SLL(){
+  algot::SLLNode *node = head->getNext();
+  algot::SLLNode *prev;
+  delete head;
+  while(node){
+    prev = node;
+    node = node->getNext();
+    delete prev;
+  }
+}
+
 bool algot::SLL::isEmpty(){
   return !(bool)head->getNext();
 }
@@ -64,4 +75,19 @@ int* algot::SLL::toArray(int &count){
 
 int algot::SLL::size(){
   return sizeOf;
+}
+
+const algot::SLLNode *const algot::SLL::getHead() const{
+  return head->getNext();
+}
+
+const algot::SLLNode *const algot::SLL::getNode(int e) const{
+  SLLNode* node = this->head->getNext();
+  while(node){
+    if(node->getValue() == e){
+      return node;
+    }
+    node = node->getNext();
+  }
+  return NULL;
 }

@@ -13,21 +13,37 @@ set(PROJECT_CXX_DIR ${PROJECT_SOURCE_DIR}/src)
 include_directories("${PROJECT_INCLUDE_DIR}")
 include_directories("${PROJECT_SOURCE_DIR}")
 
-add_library(sll "${PROJECT_CXX_DIR}/SLL.cpp")
-add_library(sll_node "${PROJECT_CXX_DIR}/SLLNode.cpp")
+#General node class
+add_library(base_node "${PROJECT_CXX_DIR}/BASENode.cpp")
 
+
+#Single Linked List Node
+add_library(sll_node "${PROJECT_CXX_DIR}/SLLNode.cpp")
+target_link_libraries(sll_node base_node)
+
+#Singly linked lists
+add_library(sll "${PROJECT_CXX_DIR}/SLL.cpp")
 target_link_libraries(sll sll_node)
+
+#Double linked List node
+#add_library(dll_node "${PROJECT_CXX_DIR}/DLLNode.cpp")
+#target_link_libraries(dll_node base_node)
+
+#Doubly linked lists
+#add_library(dll "${PROJECT_CXX_DIR}/DLL.cpp")
+#target_link_libraries(dll dll_node)
+
 
 ADD_SUBDIRECTORY("ext/gtest-1.6.0")
 enable_testing()
 
 include_directories(${gtest_SOURCE_DIR}/include ${gtest_SOURCE_DIR})
 FILE(GLOB tests "${PROJECT_SOURCE_DIR}/test/*.cpp")
-message(tests)
+
 add_executable(runUnitTests
     ${tests}
 )
-target_link_libraries(runUnitTests gtest gtest_main sll_node sll)
+target_link_libraries(runUnitTests gtest gtest_main sll_node sll dll_node dll dll_node)
 
 add_test(
   test

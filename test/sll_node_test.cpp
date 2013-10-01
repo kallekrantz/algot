@@ -1,5 +1,4 @@
 #include "include/SLLNode.h"
-#include "include/SLL.h"
 #include "gtest/gtest.h"
 
 class SLLNodeTest : public ::testing::Test{
