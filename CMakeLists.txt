@@ -12,7 +12,7 @@ set(PROJECT_CXX_DIR ${PROJECT_SOURCE_DIR}/src)
 
 include_directories("${PROJECT_INCLUDE_DIR}")
 include_directories("${PROJECT_SOURCE_DIR}")
-
+add_definitions(-std=c++11 -m64 -pedantic -Wall -Wshadow -Wpointer-arith -Wcast-qual -Wstrict-prototypes -Wmissing-prototypes)
 #General node class
 add_library(base_node "${PROJECT_CXX_DIR}/BASENode.cpp")
 
