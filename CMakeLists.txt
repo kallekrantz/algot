@@ -12,7 +12,10 @@ set(PROJECT_CXX_DIR ${PROJECT_SOURCE_DIR}/src)
 
 include_directories("${PROJECT_INCLUDE_DIR}")
 include_directories("${PROJECT_SOURCE_DIR}")
-add_definitions(-std=c++11 -m64 -pedantic -Wall -Wshadow -Wpointer-arith -Wcast-qual)
+add_definitions(-std=c++11 -m64 -pedantic -Wall -Wshadow -Wpointer-arith -Wcast-qual --coverage)
+#fprofile-arcs -ftest-coverage)
+SET (CMAKE_SHARED_LINKER_FLAGS ${CMAKE_SHARED_LINKER_FLAGS_INIT} $ENV{LDFLAGS} CACHE STRING "-lgcov")
+
 #General node class
 add_library(base_node "${PROJECT_CXX_DIR}/BASENode.cpp")
 
@@ -43,9 +46,9 @@ FILE(GLOB tests "${PROJECT_SOURCE_DIR}/test/*.cpp")
 add_executable(runUnitTests
     ${tests}
 )
-set_target_properties(runUnitTests PROPERTIES COMPILE_FLAGS "-fprofile-arcs -ftest-coverage")
-set_target_properties(runUnitTests PROPERTIES COMPILE_FLAGS "-lcgov")
-target_link_libraries(runUnitTests gtest gtest_main sll_node sll dll_node dll dll_node)
+
+set_target_properties(runUnitTests PROPERTIES COMPILE_FLAGS "--coverage")
+target_link_libraries(runUnitTests gtest gtest_main sll_node sll dll_node dll dll_node gcov)
 
 
 add_test(
