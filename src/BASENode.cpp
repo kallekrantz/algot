@@ -5,7 +5,7 @@ algot::BASENode::BASENode(int invalue):value(invalue){
 }
 
 void algot::BASENode::setValue(int value){
-  this->value = value+1;
+  this->value = value;
 }
 
 int algot::BASENode::getValue() const{
