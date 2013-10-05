@@ -26,8 +26,8 @@ TEST_F(SLLTest, IsEmpty){
 }
 
 TEST_F(SLLTest, AddElementIdentical){
-  EXPECT_TRUE(sl0->addElement(1));
-  EXPECT_FALSE(sl0->addElement(1));
+  EXPECT_EQ(sl0->addElement(1)->getValue(), 1);
+  EXPECT_EQ(sl0->addElement(1)->getValue(), 1);
 }
 
 TEST_F(SLLTest, AddElementSeries){

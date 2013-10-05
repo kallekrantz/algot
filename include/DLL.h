@@ -7,11 +7,13 @@ namespace algot{
   public:
     DLL();
     ~DLL();
-    bool addElement(int e);
+    const DLLNode *  addElement(int e);
     bool deleteElement(int e);
-    bool isEmpty();
-    const DLLNode * const getHead() const;
-    const DLLNode * const getTail() const;
+    bool isEmpty() const;
+    int size() const;
+    const DLLNode * getHead() const;
+    const DLLNode *  getTail() const;
+    int* toArray() const;
   private:
     algot::DLLNode* head;
     algot::DLLNode* tail;

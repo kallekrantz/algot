@@ -21,31 +21,26 @@ bool algot::SLL::isEmpty(){
   return !(bool)head->getNext();
 }
 
-bool algot::SLL::addElement(int e){
-  algot::SLLNode* node = head;
-  algot::SLLNode* next = NULL;
-  while(next = node->getNext()){
-    if(e < next->getValue()){
-      node->setNext(new algot::SLLNode(e, next));
+const algot::SLLNode * algot::SLL::addElement(int e){
+  algot::SLLNode* node = head->getNext();
+  algot::SLLNode* prev = head;
+  while(node){
+    if(e <= node->getValue()){
+      prev->setNext(new algot::SLLNode(e, node));
       this->sizeOf++;
-      return true;
+      return prev->getNext();
     }
-    else if(e == next->getValue()){
-      return false;
-    }
-    else{
-      node = next;
-    }
+    prev = node;
+    node = node->getNext();
   }
-  node->setNext(new algot::SLLNode(e, next));
+  prev->setNext(new algot::SLLNode(e, NULL));
   this->sizeOf++;
-  return true;
+  return prev->getNext();
 }
 
 bool algot::SLL::deleteElement(int e){
-  algot::SLLNode *node = head, *next = NULL, *prev = NULL;
-  while((prev = node) && (node = node->getNext())){
-    
+  algot::SLLNode *node = head->getNext(), *prev = head;
+  while(node){
     if(e < node->getValue()){
       break;
     }
@@ -55,9 +50,8 @@ bool algot::SLL::deleteElement(int e){
       sizeOf--;
       return true;
     }
-    else{
-      prev = node;
-    }
+    prev = node;
+    node = node->getNext();
   }
   return false;
 }
@@ -77,11 +71,11 @@ int algot::SLL::size(){
   return sizeOf;
 }
 
-const algot::SLLNode *const algot::SLL::getHead() const{
+const algot::SLLNode * algot::SLL::getHead() const{
   return head->getNext();
 }
 
-const algot::SLLNode *const algot::SLL::getNode(int e) const{
+const algot::SLLNode * algot::SLL::getNode(int e) const{
   SLLNode* node = this->head->getNext();
   while(node){
     if(node->getValue() == e){

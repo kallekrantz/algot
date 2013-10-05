@@ -22,26 +22,23 @@ algot::DLL::~DLL(){
   delete tail;
 }
 
-const algot::DLLNode* const algot::DLL::getHead() const{
+const algot::DLLNode * algot::DLL::getHead() const{
   return this->head;
 }
 
-const algot::DLLNode* const algot::DLL::getTail() const{
+const algot::DLLNode * algot::DLL::getTail() const{
   return this->tail;
 }
 
-bool algot::DLL::addElement(int e){
+const algot::DLLNode * algot::DLL::addElement(int e){
   algot::DLLNode* node = head->getNext();
   while(node != tail){
-    if( e < node->getValue()){
+    if( e <= node->getValue()){
       node = new DLLNode(e, node->getPrev(), node->getNext());
       node->getPrev()->setNext(node);
       node->getNext()->setPrev(node);
       this->sizeOf++;
-      return true;
-    }
-    else if(e == node->getValue()){
-      return false;
+      return node;
     }
     node = node->getNext();
   }
@@ -49,5 +46,45 @@ bool algot::DLL::addElement(int e){
   node->getPrev()->setNext(node);
   node->getNext()->setPrev(node);
   this->sizeOf++;
-  return true;
+  return node;
+}
+
+//Deletes a node which is equal to element e. 
+//This does not delete all elements that are equal.
+bool algot::DLL::deleteElement(int e){
+  algot::DLLNode* node = head->getNext();
+  while(node != tail){
+    if(e < node->getValue()){
+      break;
+    }
+    if(e == node->getValue()){
+      node->getPrev()->setNext(node->getNext());
+      node->getNext()->setPrev(node->getPrev());
+
+      delete node;
+      sizeOf--;
+
+      return true;
+    }
+    node = node->getNext();
+  }
+  return false;
+}
+
+int* algot::DLL::toArray() const{
+  int* out = new int[size()];
+  algot::DLLNode* node = head->getNext();
+  for(int i = 0; i < size(); i++){
+    out[i] = node->getValue();
+    node = node->getNext();
+  }
+  return out;
+}
+
+bool algot::DLL::isEmpty() const{
+  return this->sizeOf == 0;
+}
+
+int algot::DLL::size() const{
+  return this->sizeOf;
 }

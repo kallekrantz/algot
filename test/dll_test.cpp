@@ -31,13 +31,63 @@ TEST_F(DLLTest, AddElement){
 }
 
 TEST_F(DLLTest, AddIdentialElement){
-  ASSERT_TRUE(dll0->addElement(1));
-  ASSERT_FALSE(dll0->addElement(1));
+  ASSERT_EQ(dll0->addElement(1)->getValue(), 1);
+  ASSERT_EQ(dll0->addElement(1)->getValue(), 1);
 }
 
 TEST_F(DLLTest, AddSeriesOfElements){
   int count = 100;
   for(int i = 0; i < count; i++){
-    ASSERT_TRUE(dll0->addElement(i));
+    ASSERT_EQ(dll0->addElement(i)->getValue(), i);
+  }
+}
+
+TEST_F(DLLTest, DeleteExistingElement){
+  dll0->addElement(5);
+  ASSERT_TRUE(dll0->deleteElement(5));
+}
+
+TEST_F(DLLTest, DeleteNotExistingElement){
+  ASSERT_FALSE(dll0->deleteElement(5));
+}
+
+TEST_F(DLLTest, AddSize){
+  int count = 100;
+  for (int i = count; i > 0; i--){
+    dll0->addElement(i);
+  }
+  ASSERT_EQ(count, dll0->size());
+}
+
+TEST_F(DLLTest, SubtractSize){
+  int count = 100;
+  for(int i = 1; i < count; i++){
+    ASSERT_EQ(dll0->addElement(i)->getValue(), i);
+  }
+  for(int i = 1; i < count; i++){
+    ASSERT_TRUE(dll0->deleteElement(i));
+  }
+  ASSERT_EQ(0, dll0->size());
+}
+
+TEST_F(DLLTest, ToArray){
+  int count = 100;
+  for(int i = 0; i < count; i++){
+    dll0->addElement(i);
+  }
+  int *array = dll0->toArray();
+  for(int i = 0; i < count; i++){
+    ASSERT_EQ(array[i], i);
+  }
+}
+TEST_F(DLLTest, AddReverseOrder){
+  int count = 100;
+  for(int i = count; i > 0; i--){
+    ASSERT_EQ(dll0->addElement(i)->getValue(),i);
+  }
+  const algot::DLLNode* node = dll0->getHead();
+  for(int i = count; i < count; i++){
+    ASSERT_EQ(node->getValue(), i);
+    node = node->getNext();
   }
 }

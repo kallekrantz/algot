@@ -8,9 +8,9 @@ namespace algot{
   public:
     DLLNode(int value, DLLNode* prev=NULL, DLLNode* next=NULL);
     DLLNode* getNext();
-    const DLLNode* const getNext() const;
+    const DLLNode* getNext() const;
     DLLNode* getPrev();
-    const DLLNode* const getPrev() const;
+    const DLLNode* getPrev() const;
     void setNext(DLLNode* node);
     void setPrev(DLLNode* node);
   private:
