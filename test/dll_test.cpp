@@ -80,6 +80,16 @@ TEST_F(DLLTest, ToArray){
     ASSERT_EQ(array[i], i);
   }
 }
+
+TEST_F(DLLTest, IsEmpty){
+  ASSERT_TRUE(dll0->isEmpty());
+}
+
+TEST_F(DLLTest, IsNotEmpty){
+  dll0->addElement(1);
+  ASSERT_FALSE(dll0->isEmpty());
+}
+
 TEST_F(DLLTest, AddReverseOrder){
   int count = 100;
   for(int i = count; i > 0; i--){
