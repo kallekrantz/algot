@@ -1,87 +1,87 @@
 #include "include/SLL.h"
-#include "include/SLLNode.h"
 #include <iostream>
+
 algot::SLL::SLL(){
-  sizeOf = 0;
-  head = new SLLNode(0);
+  sizeOf_ = 0;
+  head_ = new algot::SLL::Node(0);
 }
 
 algot::SLL::~SLL(){
-  algot::SLLNode *node = head->getNext();
-  algot::SLLNode *prev;
-  delete head;
+  algot::SLL::Node *node = head_->next_;
+  algot::SLL::Node *prev;
+  delete head_;
   while(node){
     prev = node;
-    node = node->getNext();
+    node = node->next_;
     delete prev;
   }
 }
 
 bool algot::SLL::isEmpty(){
-  return !(bool)head->getNext();
+  return sizeOf_ == 0;
 }
 
-const algot::SLLNode * algot::SLL::addElement(int e){
-  algot::SLLNode* node = head->getNext();
-  algot::SLLNode* prev = head;
+const algot::SLL::Node * algot::SLL::addElement(int e){
+  algot::SLL::Node* node = head_->next_;
+  algot::SLL::Node* prev = head_;
   while(node){
-    if(e <= node->getValue()){
-      prev->setNext(new algot::SLLNode(e, node));
-      this->sizeOf++;
-      return prev->getNext();
+    if(e <= node->value_){
+      prev->next_ = (new algot::SLL::Node(e, node));
+      this->sizeOf_++;
+      return prev->next_;
     }
     prev = node;
-    node = node->getNext();
+    node = node->next_;
   }
-  prev->setNext(new algot::SLLNode(e, NULL));
-  this->sizeOf++;
-  return prev->getNext();
+  prev->next_ = (new algot::SLL::Node(e, NULL));
+  this->sizeOf_++;
+  return prev->next_;
 }
 
 bool algot::SLL::deleteElement(int e){
-  algot::SLLNode *node = head->getNext(), *prev = head;
+  algot::SLL::Node *node = head_->next_, *prev = head_;
   while(node){
-    if(e < node->getValue()){
+    if(e < node->value_){
       break;
     }
-    else if(e == node->getValue()){
-      prev->setNext(node->getNext());
+    else if(e == node->value_){
+      prev->next_ = node->next_;
       delete node;
-      sizeOf--;
+      sizeOf_--;
       return true;
     }
     prev = node;
-    node = node->getNext();
+    node = node->next_;
   }
   return false;
 }
 
 int* algot::SLL::toArray(int &count){
-  count = this->size();
+  count = size();
   int* outputArray = new int[count];
-  algot::SLLNode* node = this->head->getNext();
+  algot::SLL::Node* node = head_->next_;
   for(int i = 0; i < count; i++){
-    outputArray[i] = node->getValue();
-    node = node->getNext();
+    outputArray[i] = node->value_;
+    node = node->next_;
   }
   return outputArray;
 }
 
 int algot::SLL::size(){
-  return sizeOf;
+  return sizeOf_;
 }
 
-const algot::SLLNode * algot::SLL::getHead() const{
-  return head->getNext();
+const algot::SLL::Node * algot::SLL::getHead() const{
+  return head_->next_;
 }
 
-const algot::SLLNode * algot::SLL::getNode(int e) const{
-  SLLNode* node = this->head->getNext();
+const algot::SLL::Node * algot::SLL::getNode(int e) const{
+  SLL::Node* node = head_->next_;
   while(node){
-    if(node->getValue() == e){
+    if(node->value_ == e){
       return node;
     }
-    node = node->getNext();
+    node = node->next_;
   }
   return NULL;
 }

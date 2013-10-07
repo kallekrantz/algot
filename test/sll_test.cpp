@@ -1,4 +1,3 @@
-#include "include/SLLNode.h"
 #include "include/SLL.h"
 #include "gtest/gtest.h"
 
@@ -26,8 +25,8 @@ TEST_F(SLLTest, IsEmpty){
 }
 
 TEST_F(SLLTest, AddElementIdentical){
-  EXPECT_EQ(sl0->addElement(1)->getValue(), 1);
-  EXPECT_EQ(sl0->addElement(1)->getValue(), 1);
+  EXPECT_EQ(sl0->addElement(1)->value_, 1);
+  EXPECT_EQ(sl0->addElement(1)->value_, 1);
 }
 
 TEST_F(SLLTest, AddElementSeries){
@@ -90,10 +89,10 @@ TEST_F(SLLTest, IterateList){
   for(int i = 0; i < count; i++){
     sl0->addElement(i);
   }
-  algot::SLLNode const* head = sl0->getHead();
+  algot::SLL::Node const* head = sl0->getHead();
   for(int i = 0; i < count; i++){
-    ASSERT_EQ(i, head->getValue());
-    head = head->getNext();
+    ASSERT_EQ(i, head->value_);
+    head = head->next_;
   }
 }
 
@@ -101,7 +100,7 @@ TEST_F(SLLTest, FindInList){
   sl0->addElement(1);
   sl0->addElement(-1);
   sl0->addElement(5);
-  EXPECT_EQ(-1, sl0->getNode(-1)->getValue());
-  EXPECT_EQ(5, sl0->getNode(5)->getValue());
+  EXPECT_EQ(-1, sl0->getNode(-1)->value_);
+  EXPECT_EQ(5, sl0->getNode(5)->value_);
   EXPECT_FALSE(sl0->getNode(2));
 }

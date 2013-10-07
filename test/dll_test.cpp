@@ -1,4 +1,3 @@
-#include "include/DLLNode.h"
 #include "include/DLL.h"
 #include "gtest/gtest.h"
 
@@ -20,10 +19,10 @@ protected:
 };
 
 TEST_F(DLLTest, HeadTailLink){
-  const algot::DLLNode* const head = dll0->getHead();
-  const algot::DLLNode* const tail = dll0->getTail();
-  EXPECT_EQ(tail, head->getNext());
-  EXPECT_EQ(head, tail->getPrev());
+  const algot::DLL::Node* const head = dll0->getHead();
+  const algot::DLL::Node* const tail = dll0->getTail();
+  EXPECT_EQ(tail, head->next_);
+  EXPECT_EQ(head, tail->prev_);
 }
 
 TEST_F(DLLTest, AddElement){
@@ -31,14 +30,14 @@ TEST_F(DLLTest, AddElement){
 }
 
 TEST_F(DLLTest, AddIdentialElement){
-  ASSERT_EQ(dll0->addElement(1)->getValue(), 1);
-  ASSERT_EQ(dll0->addElement(1)->getValue(), 1);
+  ASSERT_EQ(dll0->addElement(1)->value_, 1);
+  ASSERT_EQ(dll0->addElement(1)->value_, 1);
 }
 
 TEST_F(DLLTest, AddSeriesOfElements){
   int count = 100;
   for(int i = 0; i < count; i++){
-    ASSERT_EQ(dll0->addElement(i)->getValue(), i);
+    ASSERT_EQ(dll0->addElement(i)->value_, i);
   }
 }
 
@@ -62,7 +61,7 @@ TEST_F(DLLTest, AddSize){
 TEST_F(DLLTest, SubtractSize){
   int count = 100;
   for(int i = 1; i < count; i++){
-    ASSERT_EQ(dll0->addElement(i)->getValue(), i);
+    ASSERT_EQ(dll0->addElement(i)->value_, i);
   }
   for(int i = 1; i < count; i++){
     ASSERT_TRUE(dll0->deleteElement(i));
@@ -93,11 +92,11 @@ TEST_F(DLLTest, IsNotEmpty){
 TEST_F(DLLTest, AddReverseOrder){
   int count = 100;
   for(int i = count; i > 0; i--){
-    ASSERT_EQ(dll0->addElement(i)->getValue(),i);
+    ASSERT_EQ(dll0->addElement(i)->value_,i);
   }
-  const algot::DLLNode* node = dll0->getHead();
+  const algot::DLL::Node* node = dll0->getHead();
   for(int i = count; i < count; i++){
-    ASSERT_EQ(node->getValue(), i);
-    node = node->getNext();
+    ASSERT_EQ(node->value_, i);
+    node = node->next_;
   }
 }
