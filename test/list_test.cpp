@@ -78,3 +78,18 @@ TEST_F(ListTest, FindExistingElement){
 TEST_F(ListTest, FindNonExistingElement){
   ASSERT_EQ(-1, list0->findElement(5));
 }
+
+TEST_F(ListTest, AddSize){
+  list0->addElement(5);
+  ASSERT_EQ(1, list0->size());
+}
+
+TEST_F(ListTest, SubtractSize){
+  int count = 100;
+  for(int i = 0; i < count; i++){
+    list0->addElement(i);
+  }
+  ASSERT_EQ((unsigned)count, list0->size());
+  list0->deleteElement(5);
+  ASSERT_EQ((unsigned)count-1, list0->size());
+}
