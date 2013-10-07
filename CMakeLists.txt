@@ -13,7 +13,7 @@ set(PROJECT_CXX_DIR ${PROJECT_SOURCE_DIR}/src)
 include_directories("${PROJECT_INCLUDE_DIR}")
 include_directories("${PROJECT_SOURCE_DIR}")
 add_definitions(-std=c++11)
-add_definitions(-m64 -pedantic -Wall -Wshadow -Wpointer-arith -Wcast-qual --coverage)
+add_definitions(-m64 -pedantic -Wall -Wshadow -Wpointer-arith -Wcast-qual --coverage -O0)
 
 SET (CMAKE_SHARED_LINKER_FLAGS ${CMAKE_SHARED_LINKER_FLAGS_INIT} $ENV{LDFLAGS} CACHE STRING "-lgcov")
 SET (CMAKE_STATIC_LINKER_FLAGS ${CMAKE_STATIC_LINKER_FLAGS_INIT} $ENV{LDFLAGS} CACHE STRING "-gcov")
