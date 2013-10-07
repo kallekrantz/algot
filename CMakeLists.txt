@@ -24,6 +24,9 @@ add_library(sll "${PROJECT_CXX_DIR}/SLL.cpp")
 #Doubly linked lists
 add_library(dll "${PROJECT_CXX_DIR}/DLL.cpp")
 
+#Expandable List
+add_library(list "${PROJECT_CXX_DIR}/List.cpp")
+
 ADD_SUBDIRECTORY("ext/gtest-1.6.0")
 enable_testing()
 
@@ -35,7 +38,7 @@ add_executable(runUnitTests
 )
 
 set_target_properties(runUnitTests PROPERTIES COMPILE_FLAGS "--coverage")
-target_link_libraries(runUnitTests gtest gtest_main  sll  dll  gcov)
+target_link_libraries(runUnitTests gtest gtest_main  sll  dll list  gcov)
 
 
 add_test(
