@@ -13,7 +13,7 @@ set(PROJECT_CXX_DIR ${PROJECT_SOURCE_DIR}/src)
 include_directories("${PROJECT_INCLUDE_DIR}")
 include_directories("${PROJECT_SOURCE_DIR}")
 add_definitions(-std=c++11)
-add_definitions(-m64 -pedantic -Wall -Wshadow -Wpointer-arith -Wcast-qual --coverage -O0)
+add_definitions(-m64 -pedantic -Wall -Wshadow -Wpointer-arith -Wcast-qual --coverage)
 
 SET (CMAKE_SHARED_LINKER_FLAGS ${CMAKE_SHARED_LINKER_FLAGS_INIT} $ENV{LDFLAGS} CACHE STRING "-lgcov")
 SET (CMAKE_STATIC_LINKER_FLAGS ${CMAKE_STATIC_LINKER_FLAGS_INIT} $ENV{LDFLAGS} CACHE STRING "-gcov")
@@ -27,6 +27,9 @@ add_library(dll "${PROJECT_CXX_DIR}/DLL.cpp")
 #Expandable List
 add_library(list "${PROJECT_CXX_DIR}/List.cpp")
 
+#HashTable
+add_library(hashtable "${PROJECT_CXX_DIR}/HashTable.cpp")
+
 ADD_SUBDIRECTORY("ext/gtest-1.6.0")
 enable_testing()
 
@@ -38,7 +41,7 @@ add_executable(runUnitTests
 )
 
 set_target_properties(runUnitTests PROPERTIES COMPILE_FLAGS "--coverage")
-target_link_libraries(runUnitTests gtest gtest_main  sll  dll list  gcov)
+target_link_libraries(runUnitTests gtest gtest_main  sll  dll list hashtable gcov)
 
 
 add_test(
