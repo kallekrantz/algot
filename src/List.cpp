@@ -1,7 +1,8 @@
 #include "include/List.h"
 #include <iostream>
-algot::List::List(unsigned int size){
-  size_ = size;
+
+algot::List::List(unsigned int newSize){
+  size_ = newSize;
   realSize_ = 0;
   list_ = new int[size_];
 }
@@ -27,7 +28,7 @@ int algot::List::addElement(int e){
 }
 
 bool algot::List::deleteElement(int e){
-  int i;
+  unsigned int i;
   bool found = false;
   for(i = 0; i < realSize_; i++){
     if(e == list_[i]){  
@@ -45,7 +46,7 @@ bool algot::List::deleteIndex(unsigned int index){
   if(index >= realSize_){
     return false;
   }
-  for(int j = index+1; j < realSize_; j++){
+  for(unsigned int j = index+1; j < realSize_; j++){
     list_[j-1] = list_[j];
   }
   realSize_--;
@@ -53,7 +54,7 @@ bool algot::List::deleteIndex(unsigned int index){
 }
 
 int algot::List::findElement(int e){
-  for(int i = 0; i < realSize_; i++){
+  for(unsigned int i = 0; i < realSize_; i++){
     if(e == list_[i]){
       return i;
     }
@@ -81,14 +82,14 @@ unsigned int algot::List::containerSize(){
 }
 
 
-unsigned int algot::List::resizeTo(unsigned int size){
+unsigned int algot::List::resizeTo(unsigned int newSize){
   int* temp = list_;
-  list_ = new int[size];
+  list_ = new int[newSize];
   for(unsigned int i = 0; i < size_; i++){
     list_[i] = temp[i];
   }
-  size_ = size;
+  size_ = newSize;
   delete[] temp;
-  return size;
+  return newSize;
 }
 

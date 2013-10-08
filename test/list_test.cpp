@@ -81,7 +81,7 @@ TEST_F(ListTest, FindNonExistingElement){
 
 TEST_F(ListTest, AddSize){
   list0->addElement(5);
-  ASSERT_EQ(1, list0->size());
+  ASSERT_EQ((unsigned)1, list0->size());
 }
 
 TEST_F(ListTest, SubtractSize){
