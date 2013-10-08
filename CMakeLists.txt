@@ -19,7 +19,8 @@ SET (CMAKE_SHARED_LINKER_FLAGS ${CMAKE_SHARED_LINKER_FLAGS_INIT} $ENV{LDFLAGS} C
 SET (CMAKE_STATIC_LINKER_FLAGS ${CMAKE_STATIC_LINKER_FLAGS_INIT} $ENV{LDFLAGS} CACHE STRING "-gcov")
 
 #Singly linked lists
-add_library(sll "${PROJECT_CXX_DIR}/SLL.cpp")
+#add_library(sll "${PROJECT_CXX_DIR}/SLL.cpp")
+#This is since templates are actually HORRIBLE
 
 #Doubly linked lists
 add_library(dll "${PROJECT_CXX_DIR}/DLL.cpp")
@@ -41,7 +42,7 @@ add_executable(runUnitTests
 )
 
 set_target_properties(runUnitTests PROPERTIES COMPILE_FLAGS "--coverage")
-target_link_libraries(runUnitTests gtest gtest_main  sll  dll list hashtable gcov)
+target_link_libraries(runUnitTests gtest gtest_main dll list hashtable gcov)
 
 
 add_test(

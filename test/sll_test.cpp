@@ -4,18 +4,18 @@
 class SLLTest : public ::testing::Test{
 protected:
   virtual void SetUp(){
-    sl0 = new algot::SLL();
-    sl1 = new algot::SLL();
-    sl2 = new algot::SLL();
+    sl0 = new algot::SLL<int>();
+    sl1 = new algot::SLL<int>();
+    sl2 = new algot::SLL<int>();
   }
   virtual void TearDown(){
     delete sl0;
     delete sl1;
     delete sl2;
   }
-  algot::SLL *sl0;
-  algot::SLL *sl1;
-  algot::SLL *sl2;
+  algot::SLL<int> *sl0;
+  algot::SLL<int> *sl1;
+  algot::SLL<int> *sl2;
 };
 
 TEST_F(SLLTest, IsEmpty){
@@ -89,7 +89,7 @@ TEST_F(SLLTest, IterateList){
   for(int i = 0; i < count; i++){
     sl0->addElement(i);
   }
-  algot::SLL::Node const* head = sl0->getHead();
+  algot::SLLNode<int> const* head = sl0->getHead();
   for(int i = 0; i < count; i++){
     ASSERT_EQ(i, head->value_);
     head = head->next_;
