@@ -4,23 +4,23 @@
 class DLLTest : public ::testing::Test{
 protected:
   virtual void SetUp(){
-    dll0 = new algot::DLL();
-    dll1 = new algot::DLL();
-    dll2 = new algot::DLL();
+    dll0 = new algot::DLL<int>();
+    dll1 = new algot::DLL<int>();
+    dll2 = new algot::DLL<int>();
   }
   virtual void TearDown(){
     delete dll0;
     delete dll1;
     delete dll2;
   }
-  algot::DLL *dll0;
-  algot::DLL *dll1;
-  algot::DLL *dll2;
+  algot::DLL<int> *dll0;
+  algot::DLL<int> *dll1;
+  algot::DLL<int> *dll2;
 };
 
 TEST_F(DLLTest, HeadTailLink){
-  const algot::DLL::Node* const head = dll0->getHead();
-  const algot::DLL::Node* const tail = dll0->getTail();
+  const algot::DLLNode<int>* const head = dll0->getHead();
+  const algot::DLLNode<int>* const tail = dll0->getTail();
   EXPECT_EQ(tail, head->next_);
   EXPECT_EQ(head, tail->prev_);
 }
@@ -94,7 +94,7 @@ TEST_F(DLLTest, AddReverseOrder){
   for(int i = count; i > 0; i--){
     ASSERT_EQ(dll0->addElement(i)->value_,i);
   }
-  const algot::DLL::Node* node = dll0->getHead();
+  const algot::DLLNode<int>* node = dll0->getHead();
   for(int i = count; i < count; i++){
     ASSERT_EQ(node->value_, i);
     node = node->next_;
