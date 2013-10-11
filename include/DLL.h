@@ -19,8 +19,8 @@ namespace algot{
   public:
     DLL(){
       sizeOf_ = 0;
-      head_ = new algot::DLLNode<E>(0);
-      tail_ = new DLLNode<E>(0);
+      head_ = new DLLNode<E>(E());
+      tail_ = new DLLNode<E>(E());
       head_->next_ = tail_;
       tail_->prev_ = head_;
     };
@@ -35,7 +35,17 @@ namespace algot{
       }
       delete tail_;
     };
-    const DLLNode<E> *  addElement(int e){
+    const DLLNode<E>* get(E e) const{
+      const algot::DLLNode<E>* node = head_->next_;
+      while(node != tail_){
+        if(node->value_ == e){
+          return node;
+        }
+        node = node->next_;
+      }
+      return NULL;
+    }
+    const DLLNode<E>* add(E e){
       algot::DLLNode<E>* node = head_->next_;
       while(node != tail_){
         if( e <= node->value_){
@@ -54,8 +64,9 @@ namespace algot{
       return node;
       
     }
-    bool deleteElement(int e){
-      algot::DLLNode<E>* node = head_->next_;
+    bool erase(E e){
+      const algot::DLLNode<E>* node = getHead()->next_;
+      
       while(node != tail_){
         if(e < node->value_){
           break;
@@ -66,28 +77,28 @@ namespace algot{
           
           delete node;
           sizeOf_--;
-          
           return true;
         }
+        std::cout << e << std::endl;
         node = node->next_;
       }
       return false;
     };
     bool isEmpty() const{
-      return sizeOf_ == 0;
+      return head_->next_ == tail_;
     };
     int size() const{
       return sizeOf_;
     };
     const DLLNode<E>* getHead() const{
-        return head_;
+      return head_;
     };
     const DLLNode<E>*  getTail() const{
       return tail_;
     };
     int* toArray() const{
       int* out = new int[size()];
-      algot::DLLNode<E>* node = head_->next_;
+      const algot::DLLNode<E>* node = head_->next_;
       for(int i = 0; i < size(); i++){
         out[i] = node->value_;
         node = node->next_;

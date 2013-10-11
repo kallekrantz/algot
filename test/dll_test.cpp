@@ -26,34 +26,34 @@ TEST_F(DLLTest, HeadTailLink){
 }
 
 TEST_F(DLLTest, AddElement){
-  ASSERT_TRUE(dll0->addElement(2));
+  ASSERT_TRUE(dll0->add(2));
 }
 
 TEST_F(DLLTest, AddIdentialElement){
-  ASSERT_EQ(dll0->addElement(1)->value_, 1);
-  ASSERT_EQ(dll0->addElement(1)->value_, 1);
+  ASSERT_EQ(dll0->add(1)->value_, 1);
+  ASSERT_EQ(dll0->add(1)->value_, 1);
 }
 
 TEST_F(DLLTest, AddSeriesOfElements){
   int count = 100;
   for(int i = 0; i < count; i++){
-    ASSERT_EQ(dll0->addElement(i)->value_, i);
+    ASSERT_EQ(dll0->add(i)->value_, i);
   }
 }
 
 TEST_F(DLLTest, DeleteExistingElement){
-  dll0->addElement(5);
-  ASSERT_TRUE(dll0->deleteElement(5));
+  dll0->add(5);
+  ASSERT_TRUE(dll0->erase(5));
 }
 
 TEST_F(DLLTest, DeleteNotExistingElement){
-  ASSERT_FALSE(dll0->deleteElement(5));
+  ASSERT_FALSE(dll0->erase(5));
 }
 
 TEST_F(DLLTest, AddSize){
   int count = 100;
   for (int i = count; i > 0; i--){
-    dll0->addElement(i);
+    dll0->add(i);
   }
   ASSERT_EQ(count, dll0->size());
 }
@@ -61,22 +61,42 @@ TEST_F(DLLTest, AddSize){
 TEST_F(DLLTest, SubtractSize){
   int count = 100;
   for(int i = 1; i < count; i++){
-    ASSERT_EQ(dll0->addElement(i)->value_, i);
+    ASSERT_EQ(dll0->add(i)->value_, i);
   }
   for(int i = 1; i < count; i++){
-    ASSERT_TRUE(dll0->deleteElement(i));
+    ASSERT_TRUE(dll0->erase(i));
   }
   ASSERT_EQ(0, dll0->size());
+  ASSERT_TRUE(dll0->isEmpty());
 }
 
 TEST_F(DLLTest, ToArray){
   int count = 100;
   for(int i = 0; i < count; i++){
-    dll0->addElement(i);
+    dll0->add(i);
   }
   int *array = dll0->toArray();
   for(int i = 0; i < count; i++){
     ASSERT_EQ(array[i], i);
+  }
+}
+
+TEST_F(DLLTest, GetExisting){
+  const algot::DLLNode<int>* node = dll0->add(2);
+  ASSERT_EQ(node, dll0->get(2));
+}
+
+TEST_F(DLLTest, GetNonExisting){
+    ASSERT_EQ(NULL, dll0->get(2));
+}
+
+TEST_F(DLLTest, GetSeries){
+  int count = 100;
+  for(int i = 0; i < count; i++){
+    ASSERT_TRUE(dll0->add(i));
+  }
+  for(int i = 0; i< count; i++){
+    ASSERT_EQ(i, dll0->get(i)->value_);
   }
 }
 
@@ -85,14 +105,14 @@ TEST_F(DLLTest, IsEmpty){
 }
 
 TEST_F(DLLTest, IsNotEmpty){
-  dll0->addElement(1);
+  dll0->add(1);
   ASSERT_FALSE(dll0->isEmpty());
 }
 
 TEST_F(DLLTest, AddReverseOrder){
   int count = 100;
   for(int i = count; i > 0; i--){
-    ASSERT_EQ(dll0->addElement(i)->value_,i);
+    ASSERT_EQ(dll0->add(i)->value_,i);
   }
   const algot::DLLNode<int>* node = dll0->getHead();
   for(int i = count; i < count; i++){
@@ -100,3 +120,4 @@ TEST_F(DLLTest, AddReverseOrder){
     node = node->next_;
   }
 }
+
