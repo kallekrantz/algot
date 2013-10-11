@@ -43,24 +43,24 @@ TEST_F(HashTableTest, IsNotEmpty){
 TEST_F(HashTableTest, SizeIsZeroAndOne){
   table->add("Hi");
   ASSERT_EQ((unsigned)1, table->size());
-  table->add("Hi!");
+  table->add("Hi5");
   ASSERT_EQ((unsigned)2, table->size());
 }
 
 TEST_F(HashTableTest, AddThousandsAndSize){
-  unsigned int count = table->containerSize();
   std::string basestring = "Hej";
+  unsigned int count = 3;
   for(unsigned int i = 0; i < count; i++){
     std::string addedWord = std::string(basestring + std::to_string(i)); //std::to_string is the new shit in c++11
     ASSERT_TRUE(table->add(addedWord));
   }
-  ASSERT_EQ((unsigned)2003, table->containerSize());
+  ASSERT_EQ((unsigned)5, table->containerSize());
 }
 
 
 TEST_F(HashTableTest, AddThousandAndCheck){
-  unsigned int count = table->containerSize();
-  std::string basestring = "Hej";
+  unsigned int count = 500;
+  std::string basestring = "TestTest";
   for(unsigned int i = 0; i < count; i++){
     std::string addedWord = std::string(basestring + std::to_string(i)); 
     //std::to_string is the new shit in c++11
@@ -68,7 +68,6 @@ TEST_F(HashTableTest, AddThousandAndCheck){
   }
   for(unsigned int i = 0; i < count; i++){
     std::string addedWord = std::string(basestring + std::to_string(i)); 
-    //std::to_string is the new shit in c++11
     ASSERT_TRUE(table->exists(addedWord));
   }
 }
@@ -103,7 +102,7 @@ TEST_F(HashTableTest, SubtractSize){
 }
 
 TEST_F(HashTableTest, SubtractLotsSize){
-  unsigned int count = table->containerSize();
+  unsigned int count = 1000;
   std::string basestring = "Hej";
   for(unsigned int i = 0; i < count; i++){
     std::string addedWord = std::string(basestring + std::to_string(i)); 

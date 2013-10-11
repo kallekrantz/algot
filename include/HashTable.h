@@ -1,12 +1,12 @@
 #ifndef __ALGOT_HASHTABLE__
 #define __ALGOT_HASHTABLE__
 #include <string>
-#include <list>
+#include "include/DLL.h"
 namespace{
   unsigned int defaultHash(std::string str){
     //Apparantly this comes from Paul Larsson from Microsoft (Snickers)
     //However, the base implementation was using const char* as input
-    //Something that this line fixes ;)
+    //Something that this line fixes ;) (uglyuglyugly)
     const char* s = str.c_str();
     unsigned h = 0; //Can be HASH instead for more security against hash-based attacks
     while (*s){
@@ -16,10 +16,9 @@ namespace{
   }
 }
 namespace algot{
-  class SLL;
   class HashTable{
   public:
-    HashTable(unsigned int size = 1001, unsigned int (*fun)(std::string) = defaultHash);
+    HashTable(unsigned int size = 3, unsigned int (*fun)(std::string) = defaultHash);
     ~HashTable();
     bool add(std::string);
     unsigned int size();
@@ -32,7 +31,7 @@ namespace algot{
     double loadFactor();
     unsigned int (*hashFunc)(std::string);
     unsigned int useHash(std::string, unsigned int size);
-    std::list<std::string>* table;
+    DLL<std::string>* table;
     unsigned int usedCells;
     unsigned int tableSize;
   };

@@ -1,11 +1,9 @@
 #include "include/HashTable.h"
-#include <algorithm>
-#include <iostream>
 algot::HashTable::HashTable(unsigned int newsize, unsigned int (*fun)(std::string)){
   hashFunc = fun;
   tableSize = newsize;
   usedCells = 0;
-  table = new std::list<std::string>[tableSize];
+  table = new algot::DLL<std::string>[tableSize];
 }
 
 algot::HashTable::~HashTable(){
@@ -27,71 +25,63 @@ bool algot::HashTable::isEmpty(){
 
 bool algot::HashTable::add(std::string str){
   unsigned int hashNum = useHash(str, tableSize);
-  std::list<std::string>* list = table + hashNum;
-  if(list->empty()){
-    list->push_front(str);
+  algot::DLL<std::string>* list = table + hashNum;
+  if(list->isEmpty()){
     usedCells++;
   }
-  else{
-    std::list<std::string>::iterator findIter = std::find(list->begin(), list->end(), str);
-    if(findIter == list->end()){
-      list->push_back(str);
-    }
-    else{
-      return false;
-    }
+  else if(list->get(str)){
+    return false;
+  }
+  list->add(str);
+  if(loadFactor() > 0.75){
+    resizeTo((tableSize-1)*2 + 1); 
+    //The plus one is to avoid the tableSize being a direct power of two all the time.
   }
 
-  if(loadFactor() > 0.75){
-    resizeTo(tableSize*2 + 1); //The plus one is to avoid the tableSize being a power of two all the time.
-  }
   return true;
 }
 
 bool algot::HashTable::exists(std::string str){
   unsigned int hashNum = useHash(str, tableSize);
-  std::list<std::string>* list = table + hashNum;
-  std::list<std::string>::iterator findIter = std::find(list->begin(), list->end(), str);
-  if(findIter == list->end()){
-    return false;
+  algot::DLL<std::string>* list = table + hashNum;
+  const algot::DLLNode<std::string>* findNode = list->get(str);
+  if(findNode){
+    return true;
   }
-  return true;
+  return false;
 }
 
 bool algot::HashTable::remove(std::string str){
   unsigned int hashNum = useHash(str, tableSize);
-  std::list<std::string>* list = table + hashNum;
-  std::list<std::string>::iterator findIter = std::find(list->begin(), list->end(), str);  
-
-  if(findIter == list->end()){
-    return false;
-  }
-  else{
-    list->erase(findIter);
-    if(list->empty()){
+  algot::DLL<std::string>* list = table + hashNum;
+  if(list->erase(str)){
+    if(list->isEmpty()){
       usedCells--;
     }
-    return true;
+    return true;    
+  }
+  else{
+    return false;
   }
 }
 
 void algot::HashTable::resizeTo(unsigned int newSize){
-  std::list<std::string>* newTable = new std::list<std::string>[newSize];
+  algot::DLL<std::string>* newTable = new algot::DLL<std::string>[newSize];
   unsigned int newUsedCells = 0;
   for(unsigned int i = 0; i < tableSize; i++){
-    std::list<std::string>::iterator first = table[i].begin();
-    if(first != table[i].end()){
-      for(auto it = first; it != table[i].end(); it++){ //AUTO IS THE SHIT
-        unsigned int newIndex = useHash(*it, newSize);
-        if(newTable[newIndex].empty()){
-          newUsedCells++;
-        }
-        newTable[newIndex].push_front(*it);
+    algot::DLL<std::string>* list = table + i;
+    const algot::DLLNode<std::string>* first = list->getHead()->next_;
+    for(auto it = first; it != list->getTail(); it = it->next_){
+      unsigned int newIndex = useHash(it->value_, newSize);
+      if(newTable[newIndex].isEmpty()){
+        newUsedCells++;
       }
-    }
+      newTable[newIndex].add(it->value_);
   }
-  usedCells = newUsedCells;
-  tableSize = newSize;
+}
+
+  this->usedCells = newUsedCells;
+  this->tableSize = newSize;
   delete[] table;
   table = newTable;
 }
