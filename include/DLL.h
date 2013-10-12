@@ -1,6 +1,7 @@
 #ifndef __algot_dll__
 #define __algot_dll__
 #include <iostream>
+#include <ostream>
 namespace algot{
   template <typename T>
   struct DLLNode{
@@ -35,6 +36,7 @@ namespace algot{
       }
       delete tail_;
     };
+
     const DLLNode<E>* get(E e) const{
       const algot::DLLNode<E>* node = head_->next_;
       while(node != tail_){
@@ -45,11 +47,12 @@ namespace algot{
       }
       return NULL;
     }
+
     const DLLNode<E>* add(E e){
       algot::DLLNode<E>* node = head_->next_;
       while(node != tail_){
         if( e <= node->value_){
-          node = new algot::DLLNode<E>(e, node->prev_, node->next_);
+          node = new DLLNode<E>(e, node->prev_, node);
           node->prev_->next_ = node;
           node->next_->prev_ = node;
           sizeOf_++;
@@ -62,7 +65,6 @@ namespace algot{
       node->next_->prev_ = node;
       sizeOf_++;
       return node;
-      
     }
     bool erase(E e){
       const algot::DLLNode<E>* node = getHead()->next_;
@@ -79,7 +81,6 @@ namespace algot{
           sizeOf_--;
           return true;
         }
-        std::cout << e << std::endl;
         node = node->next_;
       }
       return false;
@@ -96,6 +97,7 @@ namespace algot{
     const DLLNode<E>*  getTail() const{
       return tail_;
     };
+    
     int* toArray() const{
       int* out = new int[size()];
       const algot::DLLNode<E>* node = head_->next_;
@@ -106,6 +108,18 @@ namespace algot{
       return out;
       
     };
+    friend std::ostream& operator<<(std::ostream& stream, const DLL<E>& dll){
+      const algot::DLLNode<E>* node = dll.getHead()->next_;
+      stream << "[";
+      while(node != dll.getTail()){
+        stream << node->value_ << ", " ; 
+        node = node->next_;
+      }
+      stream << "]";
+      return stream;
+    }
   };
 }
+
+
 #endif
