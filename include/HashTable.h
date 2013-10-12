@@ -24,7 +24,7 @@ namespace algot{
     unsigned int size();
     bool isEmpty();
     unsigned int containerSize();
-    bool remove(std::string);
+    bool erase(std::string);
     bool exists(std::string);
   private:
     void resizeTo(unsigned int);

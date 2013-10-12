@@ -14,6 +14,7 @@ protected:
 
 TEST_F(HashTableTest, AddNonExisting){
   ASSERT_TRUE(table->add("Hi"));
+  ASSERT_TRUE(table->exists("Hi"));
 }
 
 TEST_F(HashTableTest, AddExisting){
@@ -59,12 +60,13 @@ TEST_F(HashTableTest, AddThousandsAndSize){
 
 
 TEST_F(HashTableTest, AddThousandAndCheck){
-  unsigned int count = 500;
+  unsigned int count = 1000;
   std::string basestring = "TestTest";
   for(unsigned int i = 0; i < count; i++){
     std::string addedWord = std::string(basestring + std::to_string(i)); 
     //std::to_string is the new shit in c++11
     ASSERT_TRUE(table->add(addedWord));
+    ASSERT_TRUE(table->exists(addedWord));
   }
   for(unsigned int i = 0; i < count; i++){
     std::string addedWord = std::string(basestring + std::to_string(i)); 
@@ -81,38 +83,39 @@ TEST_F(HashTableTest, AddLotsOfThings){
 }
 
 
-TEST_F(HashTableTest, RemoveExisting){
+TEST_F(HashTableTest, EraseExisting){
   std::string str = "Hej";
   table->add(str);
-  ASSERT_TRUE(table->remove(str));
+  ASSERT_TRUE(table->erase(str));
   ASSERT_FALSE(table->exists(str));
 }
 
-TEST_F(HashTableTest, RemoveNonExisting){
+TEST_F(HashTableTest, EraseNonExisting){
   std::string str = "Hej";
-  ASSERT_FALSE(table->remove(str));
+  ASSERT_FALSE(table->erase(str));
 }
 
 TEST_F(HashTableTest, SubtractSize){
   std::string str = "Hej";
   table->add(str);
-  ASSERT_TRUE(table->remove(str));
+  ASSERT_TRUE(table->erase(str));
   ASSERT_EQ((unsigned)0, table->size());
   ASSERT_TRUE(table->isEmpty());
 }
 
 TEST_F(HashTableTest, SubtractLotsSize){
-  unsigned int count = 1000;
+  unsigned int count = 10000;
   std::string basestring = "Hej";
   for(unsigned int i = 0; i < count; i++){
     std::string addedWord = std::string(basestring + std::to_string(i)); 
     //std::to_string is the new shit in c++11
     ASSERT_TRUE(table->add(addedWord));
+    ASSERT_TRUE(table->exists(addedWord));
   }
   for(unsigned int i = 0; i < count; i++){
     std::string addedWord = std::string(basestring + std::to_string(i)); 
     //std::to_string is the new shit in c++11
-    ASSERT_TRUE(table->remove(addedWord));
+    ASSERT_TRUE(table->erase(addedWord));
   }
   ASSERT_EQ((unsigned)0, table->size());
   ASSERT_TRUE(table->isEmpty());

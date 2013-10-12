@@ -44,14 +44,13 @@ bool algot::HashTable::add(std::string str){
 bool algot::HashTable::exists(std::string str){
   unsigned int hashNum = useHash(str, tableSize);
   algot::DLL<std::string>* list = table + hashNum;
-  const algot::DLLNode<std::string>* findNode = list->get(str);
-  if(findNode){
+  if(list->get(str)){
     return true;
   }
   return false;
 }
 
-bool algot::HashTable::remove(std::string str){
+bool algot::HashTable::erase(std::string str){
   unsigned int hashNum = useHash(str, tableSize);
   algot::DLL<std::string>* list = table + hashNum;
   if(list->erase(str)){
@@ -60,9 +59,8 @@ bool algot::HashTable::remove(std::string str){
     }
     return true;    
   }
-  else{
-    return false;
-  }
+  return false;
+  
 }
 
 void algot::HashTable::resizeTo(unsigned int newSize){
@@ -72,14 +70,15 @@ void algot::HashTable::resizeTo(unsigned int newSize){
     algot::DLL<std::string>* list = table + i;
     const algot::DLLNode<std::string>* first = list->getHead()->next_;
     for(auto it = first; it != list->getTail(); it = it->next_){
-      unsigned int newIndex = useHash(it->value_, newSize);
-      if(newTable[newIndex].isEmpty()){
+      std::string newString = std::string(it->value_);
+      unsigned int newIndex = useHash(newString, newSize);
+      DLL<std::string>* newList = newTable + newIndex;
+      if(newList->isEmpty()){
         newUsedCells++;
       }
-      newTable[newIndex].add(it->value_);
+      newList->add(newString);
+    }
   }
-}
-
   this->usedCells = newUsedCells;
   this->tableSize = newSize;
   delete[] table;
