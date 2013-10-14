@@ -1,0 +1,9 @@
+#!/bin/bash
+PROJ_ROOT=`pwd`
+mkdir -p build
+cd build
+rm -rf *
+cmake ..
+make
+./runUnitTests --gtest_output=xml:coverage.junit.xml # run unit tests
+../tools/gcovr -x --exclude="/usr/|${PROJ_ROOT}/ext/*|${PROJ_ROOT}/test/*" > coverage.xml
